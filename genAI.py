@@ -1,6 +1,12 @@
+#basic LLM intigration
 import google.generativeai as genai
 from typing import Optional
 import logging
+import os
+from dotenv import load_dotenv 
+
+
+load_dotenv()
 
 class GoogleAIChat:
     
@@ -53,10 +59,14 @@ class GoogleAIChat:
 
 def main():
     try:
-        # Initialize chat client
-        chat = GoogleAIChat(api_key="AIzaSyC9SOZ_dr2Dfg53HNxrAWrurhwKORT_DjY")
         
-        # Start interactive chat
+        api_key = os.getenv("GOOGLE_API_KEY")
+        
+        if not api_key:
+            raise ValueError("API key is missing. Set GOOGLE_API_KEY environment variable.")
+        
+        chat = GoogleAIChat(api_key=api_key)
+        
         chat.start_interactive_chat()
             
     except Exception as e:
