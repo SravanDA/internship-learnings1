@@ -1,5 +1,9 @@
+#prompt engineering , prompt based output
 import google.generativeai as genai
+import os
+from dotenv import load_dotenv  
 
+load_dotenv()
 class SimplePromptManager:
     def __init__(self, api_key: str):
         genai.configure(api_key=api_key)
@@ -15,7 +19,12 @@ class SimplePromptManager:
         return response.text
 
 def main():
-    api_key = "AIzaSyC9SOZ_dr2Dfg53HNxrAWrurhwKORT_DjY" 
+    api_key = os.getenv("GOOGLE_API_KEY")
+    
+    if not api_key:
+        print("Error: GOOGLE_API_KEY is not set in the environment variables.")
+        return
+    
     pm = SimplePromptManager(api_key)
     
     while True:
